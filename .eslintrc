@@ -1,0 +1,12 @@
+{
+  "extends": "standard",
+  "globals": {
+    "fetch": "readonly"
+  },
+  "rules": {
+    "semi": 0,
+    "object-shorthand": 2,
+    "comma-dangle": 0,
+    "space-before-function-paren": 0
+  }
+}
