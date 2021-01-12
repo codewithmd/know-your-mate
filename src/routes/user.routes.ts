@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 // import { IUser } from '../types/user.types';
-// import UserModel, { UserDoc } from '../models/user.model';
+// import UserModel, { UserDocument } from '../models/user.model';
 
 const usersRouter = Router();
 

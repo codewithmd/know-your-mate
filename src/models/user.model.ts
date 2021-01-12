@@ -1,13 +1,16 @@
 import mongoose from 'mongoose';
-import { IUser } from '../types/user.types';
+import { IUser, Gender } from '../types/user.types';
 
-export interface UserDoc extends mongoose.Document {
+export interface UserDocument extends mongoose.Document {
   firstName: IUser['firstName'];
   lastName: IUser['lastName'];
+  gender: Gender;
   email: IUser['email'];
   mobileNumber: IUser['mobileNumber'];
   password: IUser['password'];
   interestedTags: IUser['interestedTags'];
+  fullName: string;
+  getGender(): string;
 }
 
 const userSchema: mongoose.Schema = new mongoose.Schema({
@@ -19,6 +22,7 @@ const userSchema: mongoose.Schema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  gender: { type: Number, enum: [0, 1], default: 0, required: true },
   email: {
     type: String,
     required: true,
@@ -34,6 +38,14 @@ const userSchema: mongoose.Schema = new mongoose.Schema({
   interestedTags: [{ type: String }],
 });
 
-const UserModel = mongoose.model<UserDoc>('User', userSchema);
+userSchema.virtual('fullName').get(function (this: UserDocument) {
+  return `${this.firstName} ${this.lastName}`;
+});
+
+userSchema.methods.getGender = function (this: UserDocument) {
+  return this.gender > 0 ? 'Male' : 'Female';
+};
+
+const UserModel = mongoose.model<UserDocument>('User', userSchema);
 
 export default UserModel;
